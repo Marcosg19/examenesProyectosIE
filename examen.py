@@ -143,22 +143,29 @@ def datos_persona():
                 edad = edad - 1
             if d == dia_actual:
                 print('\nEstá persona esta cumpliendo',str(edad) +' años hoy')
+                cursor.execute("INSERT INTO datos_persona(dia, mes, anio, edad) VALUES(%s,%s,%s,%s);",(d,m,a,edad))
+                conexion.commit()
 
 
     if m > mes_actual:
         print('\nEsta persona cumple',str(edad) + ' años este año y esta persona no ha cumplido años aun')
+        cursor.execute("INSERT INTO datos_persona(dia, mes, anio, edad) VALUES(%s,%s,%s,%s);",(d,m,a,edad))
+        conexion.commit()
 
     if m == mes_actual:
         if d < dia_actual:
             print('\nEsta persona cumplió',str(edad) + ' años este año ')
+            cursor.execute("INSERT INTO datos_persona(dia, mes, anio, edad) VALUES(%s,%s,%s,%s);",(d,m,a,edad))
+            conexion.commit()
         if d > dia_actual:
             print('\nEsta persona cumple',str(edad) + ' años este año y esta persona no ha cumplido años aun')
+            cursor.execute("INSERT INTO datos_persona(dia, mes, anio, edad) VALUES(%s,%s,%s,%s);",(d,m,a,edad))
+            conexion.commit()
 
     if m < mes_actual:
         print('\nEsta persona cumplió',str(edad) + ' años este año')
-
-    
-
+        cursor.execute("INSERT INTO datos_persona(dia, mes, anio, edad) VALUES(%s,%s,%s,%s);",(d,m,a,edad))
+        conexion.commit()
 
 
 def angulo():
@@ -194,6 +201,8 @@ def angulo():
             detener_t2 = True 
 
     print('\nEl tercer ángulo es: ', (180-(a+b)))
+    cursor.execute("INSERT INTO angulos(angulo1,angulo2,angulo3) VALUES(%s,%s,%s);",(a,b,180-(a+b)))
+    conexion.commit()
 
 
 def udc():
@@ -223,6 +232,8 @@ def udc():
     print('Centenas: ',int(centenas))
     print('Decenas: ',int(decenas))
     print('Unidades: ',int(unidades))
+    cursor.execute("INSERT INTO cdu(centenas,decenas,unidades) VALUES(%s,%s,%s);",(int(centenas),int(decenas),int(unidades)))
+    conexion.commit()
 
 def juego():
     detener_juego = True
@@ -235,18 +246,143 @@ def juego():
         input()
         if (a+b) ==8:
             print('Ganaste')
+            cursor.execute("INSERT INTO juego(dado1,dado2,mensaje) VALUES(%s,%s,'Ganaste');",(a,b))
+            conexion.commit()
             input()
             detener_juego = False
         elif (a+b) ==7:
             print('Perdiste')
+            cursor.execute("INSERT INTO juego(dado1,dado2,mensaje) VALUES(%s,%s,'Perdiste');",(a,b))
+            conexion.commit()
             input()
             detener_juego = False
         else:
             detener_juego = True
 
         
-    
+def menu_datos():
+    detenertr= True
+    while detenertr:
+        print('\n\tDatos de persona')
+        print('\nOpciones')
+        print('1. Abrir programa ')
+        print('2. Historial')
+        print('3. Regresar')
 
+        opciontr = opciones()
+
+        if opciontr == 1:
+            print('\nDatos persona')
+            datos_persona()
+            input()
+
+        elif opciontr == 2:
+            cursor.execute('SELECT*FROM datos_persona;')
+            valorestr = cursor.fetchall()
+            print()
+            print(valorestr)
+            input()
+
+        elif opciontr == 3:
+            print('\nRegresando...')
+            detenertr = False
+
+        else:
+            print('\nIngrese una opción válida')
+            input()   
+
+def menu_angulo():
+    detenertr= True
+    while detenertr:
+        print('\n\tAngulos de un triangulo')
+        print('\nOpciones')
+        print('1. Abrir programa ')
+        print('2. Historial')
+        print('3. Regresar')
+
+        opciontr = opciones()
+
+        if opciontr == 1:
+            print('\nAngulos de un triangulo')
+            angulo()
+            input()
+
+        elif opciontr == 2:
+            cursor.execute('SELECT*FROM angulos;')
+            valorestr = cursor.fetchall()
+            print()
+            print(valorestr)
+            input()
+
+        elif opciontr == 3:
+            print('\nRegresando...')
+            detenertr = False
+
+        else:
+            print('\nIngrese una opción válida')
+            input() 
+
+def menu_udc():
+    detenertr= True
+    while detenertr:
+        print('\n\tCentenas, decenas y unidades')
+        print('\nOpciones')
+        print('1. Abrir programa ')
+        print('2. Historial')
+        print('3. Regresar')
+
+        opciontr = opciones()
+
+        if opciontr == 1:
+            print('\nCentenas, decenas y unidades')
+            udc()
+            input()
+
+        elif opciontr == 2:
+            cursor.execute('SELECT*FROM cdu;')
+            valorestr = cursor.fetchall()
+            print()
+            print(valorestr)
+            input()
+
+        elif opciontr == 3:
+            print('\nRegresando...')
+            detenertr = False
+
+        else:
+            print('\nIngrese una opción válida')
+            input() 
+
+def menu_juego():
+    detenertr= True
+    while detenertr:
+        print('\n\tJuego simulado del gran 8')
+        print('\nOpciones')
+        print('1. Abrir programa ')
+        print('2. Historial')
+        print('3. Regresar')
+
+        opciontr = opciones()
+
+        if opciontr == 1:
+            print('\nJuego simulado del gran 8')
+            juego()
+            input()
+
+        elif opciontr == 2:
+            cursor.execute('SELECT*FROM juego;')
+            valorestr = cursor.fetchall()
+            print()
+            print(valorestr)
+            input()
+
+        elif opciontr == 3:
+            print('\nRegresando...')
+            detenertr = False
+
+        else:
+            print('\nIngrese una opción válida')
+            input() 
 
 
 detenerprogramas= True
@@ -262,19 +398,17 @@ while detenerprogramas:
     opcion = opciones()
 
     if opcion == 1:
-        datos_persona()
-        input()
+        menu_datos()
+ 
 
     elif opcion == 2:
-        angulo()
-        input()
+        menu_angulo()
 
     elif opcion == 3:
-        udc()
-        input()
+        menu_udc()
 
     elif opcion == 4:
-        juego()
+        menu_juego()
 
     elif opcion == 5:
         print('\n>>>>>>CERRANDO PROGRAMAS DE EXAMEN PARCIAL<<<<<<\n')
