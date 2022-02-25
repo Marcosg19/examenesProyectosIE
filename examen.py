@@ -1,3 +1,4 @@
+from random import randint
 import psycopg2
 #Conexión a base de datos
 try:
@@ -141,9 +142,22 @@ def datos_persona():
             if d > dia_actual:
                 edad = edad - 1
             if d == dia_actual:
-                print('\nEstás cumpliendo años hoy, felicidades')
+                print('\nEstá persona esta cumpliendo',str(edad) +' años hoy')
 
-    print('\nUsted tiene:',str(edad) + ' años')
+
+    if m > mes_actual:
+        print('\nEsta persona cumple',str(edad) + ' años este año y esta persona no ha cumplido años aun')
+
+    if m == mes_actual:
+        if d < dia_actual:
+            print('\nEsta persona cumplió',str(edad) + ' años este año ')
+        if d > dia_actual:
+            print('\nEsta persona cumple',str(edad) + ' años este año y esta persona no ha cumplido años aun')
+
+    if m < mes_actual:
+        print('\nEsta persona cumplió',str(edad) + ' años este año')
+
+    
 
 
 
@@ -182,6 +196,59 @@ def angulo():
     print('\nEl tercer ángulo es: ', (180-(a+b)))
 
 
+def udc():
+    detener_t1 = True
+    while detener_t1:
+        try:
+            a=int(input('\nIngrese primer número: '))
+            detener_t1 = False
+            if a < 0:
+                print('Ingresar un número válido... ')
+                detener_t1 = True
+            if a > 999:
+                print('Ingresar un número válido... ')
+                detener_t1 = True
+
+        except ValueError:
+            print('Caracter invalido...')
+            detener_t1 = True
+        
+    unidades= a%10
+    a = a/10
+    decenas= a%10
+    a = a/10
+    centenas= a%10
+
+    print('El número tiene: ')
+    print('Centenas: ',int(centenas))
+    print('Decenas: ',int(decenas))
+    print('Unidades: ',int(unidades))
+
+def juego():
+    detener_juego = True
+    while detener_juego:
+        a=randint(1,6)
+        print('Dado 1: ',a)
+        input()
+        b=randint(1,6)
+        print('Dado 2: ',b)
+        input()
+        if (a+b) ==8:
+            print('Ganaste')
+            input()
+            detener_juego = False
+        elif (a+b) ==7:
+            print('Perdiste')
+            input()
+            detener_juego = False
+        else:
+            detener_juego = True
+
+        
+    
+
+
+
 detenerprogramas= True
 while detenerprogramas:
     print('\n\tPROGRAMAS DE EXAMEN PARCIAL 1')
@@ -203,12 +270,11 @@ while detenerprogramas:
         input()
 
     elif opcion == 3:
-
+        udc()
         input()
 
     elif opcion == 4:
-
-        input()
+        juego()
 
     elif opcion == 5:
         print('\n>>>>>>CERRANDO PROGRAMAS DE EXAMEN PARCIAL<<<<<<\n')
